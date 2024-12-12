@@ -26,8 +26,10 @@
     ]
   },
   "dependencies": {
+    "chart.js": "^4.4.7",
     "express": "^4.17.2",
     "knex": "^2.5.1",
+    "react-chartjs-2": "^5.2.0",
     "sqlite3": "^5.1.6",
     "superagent": "^8.1.2"
   },

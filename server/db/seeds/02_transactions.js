@@ -19,7 +19,7 @@ export async function seed(knex) {
       id: 2,
       user_id: 1,
       description: 'Groceries',
-      amount: -200.0,
+      amount: 200.0,
       type: 'expense',
     },
     {
@@ -33,7 +33,7 @@ export async function seed(knex) {
       id: 4,
       user_id: 2,
       description: 'Utilities',
-      amount: -150.0,
+      amount: 150.0,
       type: 'expense',
     },
     {
@@ -47,7 +47,7 @@ export async function seed(knex) {
       id: 6,
       user_id: 3,
       description: 'Dining Out',
-      amount: -50.0,
+      amount: 50.0,
       type: 'expense',
     },
   ])
