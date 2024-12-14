@@ -1,10 +1,12 @@
+import IncomeExpenseChart from './IncomeExpenseChart'
 import { useFruits } from '../hooks/useFruits.ts'
 import FormField from './Form.tsx'
 
 function App() {
-  const { data } = useFruits()
-
   return (
+    <div>
+      <IncomeExpenseChart />
+    </div>
     <>
       <div className="app">
         <h1>My PiggyPal</h1>
