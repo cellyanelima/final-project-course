@@ -4,3 +4,13 @@ html,
 body {
   font-family: 'Montserrat', sans-serif;
 }
+
+.expense-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  label {
+    margin-right: 5px;
+  }
+}
