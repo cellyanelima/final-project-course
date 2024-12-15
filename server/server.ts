@@ -1,6 +1,5 @@
 import express from 'express'
 import * as Path from 'node:path'
-
 import usersRoutes from './routes/users.ts'
 import expensesRoutes from './routes/expenses.ts'
 
