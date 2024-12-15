@@ -1,5 +1,4 @@
-export interface Transaction {
-  id: number
+export interface TransactionData {
   user_id: number
   description: string
   amount: number
@@ -11,4 +10,8 @@ export interface Transaction {
     | 'Monthly'
     | 'Annually'
   type: 'income' | 'expense'
+}
+
+export interface Transaction extends TransactionData {
+  id: number
 }
