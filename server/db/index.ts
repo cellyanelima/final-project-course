@@ -64,7 +64,7 @@ export async function getAllGoals(db = connection): Promise<UserWithDetails[]> {
 export async function addExpense(
   expense: Transaction,
   db = connection,
-): Promise<Transaction> {
+): Promise<number> {
   const [newTransaction] = await db('transactions')
     .insert({
       user_id: expense.user_id,
@@ -72,10 +72,11 @@ export async function addExpense(
       amount: expense.amount,
       type: 'expense',
     })
-    .returning(['id', 'user_id', 'description', 'amount', 'type'])
+    .returning('id')
 
-  return newTransaction as Transaction
+  return newTransaction
 }
+
 export async function deleteExpense(
   expenseId: number,
   db = connection,
