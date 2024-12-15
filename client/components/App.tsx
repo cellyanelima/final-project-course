@@ -1,14 +1,14 @@
-import { useFruits } from '../hooks/useFruits.ts'
-import FormField from './Form.tsx'
+import React from 'react'
+import FormField from './Form'
+import Goals from './Goals'
 
 function App() {
   return (
-    <>
-      <div className="app">
-        <h1>Fullstack Boilerplate - with Fruits!</h1>
-        <FormField />
-      </div>
-    </>
+    <div className="app">
+      <h1>My PiggyPal</h1>
+      <FormField />
+      <Goals />
+    </div>
   )
 }
 
