@@ -1,13 +1,26 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { useFinancialCalculations } from '../hooks/useFinancialCalculations'
 
-export default function FormField() {
+interface Expense {
+  expense: string
+  amount: number
+  frequency: string
+}
+
+const FormField: React.FC = () => {
   const [income, setIncome] = useState<number>(0)
-  const [expenses, setExpenses] = useState<
-    { expense: string; amount: number; frequency: string }[]
-  >([])
+  const [expenses, setExpenses] = useState<Expense[]>([
+    { expense: '', amount: 0, frequency: 'Monthly' },
+  ])
+
+  const { savings } = useFinancialCalculations(income, expenses)
 
   const addExpense = () => {
     setExpenses([...expenses, { expense: '', amount: 0, frequency: 'Monthly' }])
+  }
+
+  const deleteExpense = (index: number) => {
+    setExpenses(expenses.filter((_, idx) => idx !== index))
   }
 
   return (
@@ -27,47 +40,37 @@ export default function FormField() {
         <h2>Expenses</h2>
         {expenses.map((expense, index) => (
           <div key={index} className="expense-row">
-            <label htmlFor={`expense-${index}`}>Expense: </label>
+            <label htmlFor={`expense-${index}`}>Expense:</label>
             <input
               type="text"
               id={`expense-${index}`}
               value={expense.expense}
-              onChange={(e) =>
-                setExpenses(
-                  expenses.map((item, idx) =>
-                    idx === index ? { ...item, expense: e.target.value } : item,
-                  ),
-                )
-              }
+              onChange={(e) => {
+                const newExpenses = [...expenses]
+                newExpenses[index].expense = e.target.value
+                setExpenses(newExpenses)
+              }}
             />
-            <label htmlFor={`amount-${index}`}>Amount: </label>
+            <label htmlFor={`amount-${index}`}>Amount:</label>
             <input
               type="number"
               id={`amount-${index}`}
               value={expense.amount}
-              onChange={(e) =>
-                setExpenses(
-                  expenses.map((item, idx) =>
-                    idx === index
-                      ? { ...item, amount: Number(e.target.value) }
-                      : item,
-                  ),
-                )
-              }
+              onChange={(e) => {
+                const newExpenses = [...expenses]
+                newExpenses[index].amount = Number(e.target.value)
+                setExpenses(newExpenses)
+              }}
             />
-            <label htmlFor={`frequency-${index}`}>Frequency: </label>
+            <label htmlFor={`frequency-${index}`}>Frequency:</label>
             <select
               id={`frequency-${index}`}
               value={expense.frequency}
-              onChange={(e) =>
-                setExpenses(
-                  expenses.map((item, idx) =>
-                    idx === index
-                      ? { ...item, frequency: e.target.value }
-                      : item,
-                  ),
-                )
-              }
+              onChange={(e) => {
+                const newExpenses = [...expenses]
+                newExpenses[index].frequency = e.target.value
+                setExpenses(newExpenses)
+              }}
             >
               <option value="Annually">Annually</option>
               <option value="Monthly">Monthly</option>
@@ -76,10 +79,21 @@ export default function FormField() {
               <option value="Daily">Daily</option>
               <option value="One-Off">One-Off Expense</option>
             </select>
+            <button onClick={() => deleteExpense(index)}>Delete</button>
           </div>
         ))}
+        <br></br>
         <button onClick={addExpense}>Add Expense</button>
+      </section>
+      <section>
+        <div>
+          <h1 className="savings-result">
+            Annual Savings: ${savings.toLocaleString()}
+          </h1>
+        </div>
       </section>
     </>
   )
 }
+
+export default FormField

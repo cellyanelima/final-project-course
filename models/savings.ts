@@ -5,3 +5,9 @@ export interface Savings {
   expenses: number
   amount: number
 }
+
+export interface Goals {
+  id: number
+  name: string
+  target_amount: number
+}
