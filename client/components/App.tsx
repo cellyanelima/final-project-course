@@ -1,19 +1,14 @@
-import IncomeExpenseChart from './IncomeExpenseChart'
-import FormField from './Form.tsx'
+import React from 'react'
+import FormField from './Form'
+import Goals from './Goals'
 
 function App() {
   return (
-    <>
-      <div>
-        <IncomeExpenseChart />
-      </div>
-      <div className="app">
-        <h1>My PiggyPal</h1>
-      </div>
-      <div>
-        <FormField />
-      </div>
-    </>
+    <div className="app">
+      <h1>My PiggyPal</h1>
+      <FormField />
+      <Goals />
+    </div>
   )
 }
 
