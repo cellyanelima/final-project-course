@@ -60,3 +60,31 @@ export async function getAllGoals(db = connection): Promise<UserWithDetails[]> {
   // Convert the map to an array
   return Object.values(userMap)
 }
+
+export async function addExpense(
+  expense: Transaction,
+  db = connection,
+): Promise<Transaction> {
+  const [newTransaction] = await db('transactions')
+    .insert({
+      user_id: expense.user_id,
+      description: expense.description,
+      amount: expense.amount,
+      type: 'expense',
+    })
+    .returning(['id', 'user_id', 'description', 'amount', 'type'])
+
+  return newTransaction as Transaction
+}
+export async function deleteExpense(
+  expenseId: number,
+  db = connection,
+): Promise<number> {
+  const deletedCount = await db('transactions').where({ id: expenseId }).del()
+
+  if (deletedCount === 0) {
+    throw new Error(`Expense with ID ${expenseId} not found`)
+  }
+
+  return expenseId
+}
