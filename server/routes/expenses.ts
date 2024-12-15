@@ -1,23 +1,31 @@
-import { addExpense, deleteExpense } from '../db'
 import express from 'express'
-import { Transaction } from '../../models/user'
-import connection from '../db/connection'
+import { TransactionData } from '../../models/transaction.ts'
+import * as db from '../db/index.ts'
 
 const router = express.Router()
 
 router.post('/', async (req, res) => {
   try {
-    const expense: Transaction = req.body
+    const expense: TransactionData = req.body
+
+    // TODO: Needs implementation
+    const user_id = 1
+
     if (
-      !expense.user_id ||
       !expense.description ||
       !expense.amount ||
+      !expense.frequency ||
       !expense.type
     ) {
       return res.status(400).json({ error: 'Missing required expense fields' })
     }
 
-    const expenseId = await addExpense(expense)
+    const newExpense = {
+      ...expense,
+      user_id: user_id,
+    }
+
+    const expenseId = await db.addExpense(newExpense)
     res.status(201).json({ id: expenseId })
   } catch (err) {
     if (err instanceof Error) {
@@ -28,6 +36,7 @@ router.post('/', async (req, res) => {
   }
 })
 
+/*
 router.get('/', async (req, res) => {
   try {
     const expenses = await connection('transactions').select('*')
@@ -38,6 +47,24 @@ router.get('/', async (req, res) => {
     } else {
       res.status(500).json({ error: 'An unknown error occurred' })
     }
+  }
+})
+*/
+
+router.delete('/:id', async (req, res) => {
+  const id = Number(req.params.id)
+
+  if (!id) {
+    console.error('Invalid transaction id')
+    return res.status(400).send('Bad request')
+  }
+
+  try {
+    await db.deleteExpense(id)
+    res.sendStatus(200)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Something went wrong')
   }
 })
 

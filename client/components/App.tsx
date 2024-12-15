@@ -1,16 +1,17 @@
-import React from 'react'
 import FormField from './Form'
-import Goals from './Goals'
-import IncomeExpenseChart from './IncomeExpenseChart'
-import { calculateAnnualExpenses } from '../hooks/useFinancialCalculations'
+//import Goals from './Goals'
+import BarChart from './BarChart.tsx'
+//import PieChart from './PieChart.tsx'
+//import { calculateAnnualExpenses } from '../hooks/useFinancialCalculations'
 
 function App() {
   return (
     <div className="app">
       <h1>My PiggyPal</h1>
       <FormField />
-      <Goals />
-      <IncomeExpenseChart />
+      {/* <Goals /> */}
+      <BarChart />
+      {/* <PieChart /> */}
     </div>
   )
 }
