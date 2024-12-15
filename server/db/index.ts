@@ -30,15 +30,15 @@ export async function getUserWithDetailsById(
 export async function addExpense(
   expense: TransactionData,
   db = connection,
-): Promise<Transaction> {
+): Promise<number> {
   const [newTransaction] = await db('transactions')
     .insert({
       ...expense,
       type: 'expense',
     })
-    .returning(['id', 'user_id', 'description', 'amount', 'frequency', 'type'])
+    .returning('id')
 
-  return newTransaction as Transaction
+  return newTransaction
 }
 
 export async function deleteExpense(
