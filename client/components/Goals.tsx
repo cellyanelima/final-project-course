@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { calculateAnnualExpenses } from '../hooks/useFinancialCalculations'
 
 interface Goal {
   id: number
@@ -32,13 +33,6 @@ const Goals: React.FC<{ savings: number }> = ({ savings }) => {
   return (
     <div>
       <h2>Manage Your Goals</h2>
-      {goals.map((goal, index) => (
-        <div key={index}>
-          <p>
-            Goal: {goal.title}, Target Amount: ${goal.targetAmount}
-          </p>
-        </div>
-      ))}
       <div>
         <label htmlFor="goal-title">Goal: </label>
         <input
@@ -56,6 +50,13 @@ const Goals: React.FC<{ savings: number }> = ({ savings }) => {
           onChange={(e) => handleInputChange(e, 'targetAmount')}
           placeholder="Enter target amount"
         />
+        {goals.map((goal, index) => (
+          <div key={index}>
+            <p>
+              Goal: {goal.title}, Target Amount: ${goal.targetAmount}
+            </p>
+          </div>
+        ))}
         <button onClick={addGoal}>Add Goal</button>
       </div>
     </div>
