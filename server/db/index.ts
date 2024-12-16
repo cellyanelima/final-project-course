@@ -53,3 +53,21 @@ export async function deleteExpense(
 
   return expenseId
 }
+
+export async function updateExpense(
+  id: number,
+  updatedExpense: Partial<Transaction>,
+  db = connection,
+): Promise<number> {
+  const [updatedId] = await db('transactions')
+    .where({ id })
+    .update({
+      description: updatedExpense.description,
+      amount: updatedExpense.amount,
+      type: updatedExpense.type,
+      user_id: updatedExpense.user_id,
+    })
+    .returning('id')
+
+  return updatedId
+}
