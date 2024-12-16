@@ -68,4 +68,31 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+router.patch('/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const updatedFields: Partial<TransactionData> = req.body
+
+    if (!id || !Object.keys(updatedFields).length) {
+      return res
+        .status(400)
+        .json({ error: 'Invalid ID or no fields to update' })
+    }
+
+    const updatedId = await db.updateExpense(id, updatedFields)
+
+    if (updatedId) {
+      res.status(200).json({ id: updatedId })
+    } else {
+      res.status(404).json({ error: 'Expense not found' })
+    }
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message })
+    } else {
+      res.status(500).json({ error: 'An unknown error occurred' })
+    }
+  }
+})
+
 export default router
