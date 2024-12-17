@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import '../styles/index.scss'
 
 function Overview() {
   const [transactions, setTransactions] = useState<any[]>([]) // Store transactions data
@@ -131,10 +133,10 @@ function Overview() {
   }, [userId])
 
   return (
-    <div className="overview">
+    <div className="overview-page">
       {/* Title at the top of the page */}
-      <div className="page-title">
-        <h1>Piggy Pal</h1>
+      <div>
+        <h1 className="title">My PiggyPal</h1>
       </div>
 
       <div className="user-finance-title">
@@ -150,7 +152,7 @@ function Overview() {
           {/* Transactions Section */}
           <div className="transactions-section">
             {/* Left: Income Table */}
-            <div className="income-table table-section">
+            <div className="income-box">
               <h3>Income Transactions</h3>
               <table>
                 <thead>
@@ -175,7 +177,7 @@ function Overview() {
             </div>
 
             {/* Right: Expense Table */}
-            <div className="expenses-table table-section">
+            <div className="expense-box">
               <h3>Expense Transactions</h3>
               <table>
                 <thead>
@@ -201,7 +203,7 @@ function Overview() {
           </div>
 
           {/* Goals Section */}
-          <div className="goals-table table-section">
+          <div className="goal-box">
             <h3>Goals</h3>
             <table>
               <thead>
@@ -231,6 +233,10 @@ function Overview() {
       ) : (
         <p>No transactions or goals found.</p>
       )}
+      {/* Link to Overview Page */}
+      <div className="overview-link">
+        <Link to="/">Return Home</Link>
+      </div>
     </div>
   )
 }

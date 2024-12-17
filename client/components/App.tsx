@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import FormField from './FormField.tsx'
 import BarChart from './BarChart.tsx'
 import Overview from './Overview'
@@ -32,6 +32,12 @@ function App() {
                 <div className="graph-box">
                   <PieChart />
                 </div>
+              </div>
+              {/* Link to Overview Page */}
+              <div className="overview-link">
+                <Link to="/overview?user_id=1">
+                  Check User Financial Overview
+                </Link>
               </div>
             </div>
           }
