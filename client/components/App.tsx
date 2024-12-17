@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import FormField from './Form.tsx'
+import FormField from './FormField.tsx'
 import BarChart from './BarChart.tsx'
 import Overview from './Overview'
 import PieChart from './PieChart.tsx'
@@ -9,6 +9,8 @@ import PieChart from './PieChart.tsx'
 //import { calculateAnnualExpenses } from '../hooks/useFinancialCalculations'
 //import IncomeExpenseChart from './IncomeExpenseChart'
 import '../styles/index.scss'
+import IncomeList from './IncomeList.tsx'
+import ExpenseList from './ExpenseList.tsx'
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           element={
             <div className="app">
               <h1 className="title">My PiggyPal</h1>
+              <IncomeList />
+              <ExpenseList />
               <FormField />
               <div className="graphs-container">
                 <div className="graph-box">

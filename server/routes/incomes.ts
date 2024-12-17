@@ -6,28 +6,28 @@ const router = express.Router()
 
 router.post('/', async (req, res) => {
   try {
-    const expense: TransactionData = req.body
+    const income: TransactionData = req.body
 
     // TODO: Needs implementation
     const user_id = 1
 
     if (
-      !expense.description ||
-      !expense.amount ||
-      !expense.frequency ||
-      !expense.type
+      !income.description ||
+      !income.amount ||
+      !income.frequency ||
+      !income.type
     ) {
-      return res.status(400).json({ error: 'Missing required expense fields' })
+      return res.status(400).json({ error: 'Missing required income fields' })
     }
 
-    const newExpense = {
-      ...expense,
+    const newIncome = {
+      ...income,
       user_id: user_id,
-      type: 'expense',
+      type: 'income',
     } as TransactionData
 
-    const expenseId = await db.addTransaction(newExpense)
-    res.status(201).json({ id: expenseId })
+    const incomeId = await db.addTransaction(newIncome)
+    res.status(201).json({ id: incomeId })
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ error: err.message })
@@ -41,7 +41,7 @@ router.delete('/:id', async (req, res) => {
   const id = Number(req.params.id)
 
   if (!id) {
-    console.error('Invalid expense id')
+    console.error('Invalid income id')
     return res.status(400).send('Bad request')
   }
 
@@ -70,7 +70,7 @@ router.patch('/:id', async (req, res) => {
     if (updatedId) {
       res.status(200).json({ id: updatedId })
     } else {
-      res.status(404).json({ error: 'Expense not found' })
+      res.status(404).json({ error: 'Income not found' })
     }
   } catch (err) {
     if (err instanceof Error) {
