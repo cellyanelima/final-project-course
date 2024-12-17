@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useUserData } from '../hooks/useUserData'
 import { deleteExpense } from '../apis/apiClient'
 
-export default function IncomeList() {
+const ExpenseList: React.FC = () => {
   const { data, isLoading, isError } = useUserData()
   const queryClient = useQueryClient()
 
@@ -25,30 +25,36 @@ export default function IncomeList() {
   const transactions = data.transactions.filter((t) => t.type == 'expense')
 
   return (
-    <div>
-      <section className="income">
+    <section className="expense">
+      <div>
         <h2>Expenses</h2>
         <table>
-          <tr>
-            <td>ID</td>
-            <td>Description</td>
-            <td>Amount</td>
-            <td>Frequency</td>
-            <td>Action</td>
-          </tr>
-          {transactions.map((t) => (
-            <tr key={t.id}>
-              <td>{t.id}</td>
-              <td>{t.description}</td>
-              <td>{t.amount}</td>
-              <td>{t.frequency}</td>
-              <td>
-                <button onClick={() => handleDelete(t.id)}>Delete</button>
-              </td>
+          <thead>
+            <tr>
+              <td>ID</td>
+              <td>Description</td>
+              <td>Amount</td>
+              <td>Frequency</td>
+              <td>Action</td>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {transactions.map((t) => (
+              <tr key={t.id}>
+                <td>{t.id}</td>
+                <td>{t.description}</td>
+                <td>{t.amount}</td>
+                <td>{t.frequency}</td>
+                <td>
+                  <button onClick={() => handleDelete(t.id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
-      </section>
-    </div>
+      </div>
+    </section>
   )
 }
+
+export default ExpenseList

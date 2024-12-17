@@ -9,7 +9,7 @@ export async function up(knex) {
     table.string('description')
     table.decimal('amount', 10, 2)
     table.enum('frequency', [
-      'One-Off Expense',
+      'One-Off',
       'Daily',
       'Weekly',
       'Fortnightly',

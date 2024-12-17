@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-
-import { useFinancialCalculations } from '../hooks/useFinancialCalculations'
 import { TransactionData, TransactionForm } from '../../models/transaction'
 import { addNewExpense, addNewIncome } from '../apis/apiClient'
+import Savings from './Savings'
 
 const FormField: React.FC = () => {
-  const [income] = useState<number>(0)
   const [transactions, setTransaction] = useState<TransactionForm[]>([
     { description: '', amount: 0, frequency: 'Monthly', type: 'expense' },
   ])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const queryClient = useQueryClient()
-
-  const { savings } = useFinancialCalculations(income, transactions)
 
   const addTransaction = () => {
     setTransaction([
@@ -111,7 +107,7 @@ const FormField: React.FC = () => {
                 setTransaction(newTransactions)
               }}
             >
-              <option value="One-Off Expense">One-Off Expense</option>
+              <option value="One-Off">One-Off</option>
               <option value="Daily">Daily</option>
               <option value="Weekly">Weekly</option>
               <option value="Fortnightly">Fortnightly</option>
@@ -144,12 +140,7 @@ const FormField: React.FC = () => {
         </button>
       </section>
 
-      <section>
-        <h2>Annual Savings</h2>
-        <div>
-          <h1>${savings.toLocaleString()}</h1>
-        </div>
-      </section>
+      <Savings transactions={transactions} />
     </div>
   )
 }

@@ -2,7 +2,7 @@ export interface TransactionForm {
   description: string
   amount: number
   frequency:
-    | 'One-Off Expense'
+    | 'One-Off'
     | 'Daily'
     | 'Weekly'
     | 'Fortnightly'
