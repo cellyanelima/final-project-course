@@ -35,7 +35,7 @@ const BarChart = () => {
     if (e.type === 'income') totalIncome += e.amount
     if (e.type === 'expense') totalExpense += e.amount
   })
-  console.log(totalExpense)
+  //console.log(totalExpense)
 
   const chartData = {
     labels: [data.name],

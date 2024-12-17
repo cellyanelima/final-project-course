@@ -71,3 +71,18 @@ export async function updateExpense(
 
   return updatedId
 }
+
+export async function addIncome(
+  income: TransactionData,
+  db = connection,
+): Promise<number> {
+  const result = await db('transactions').insert({
+    user_id: income.user_id,
+    description: income.description,
+    amount: income.amount,
+    frequency: income.frequency,
+    type: 'income',
+  })
+  const id = result[0]
+  return id
+}
