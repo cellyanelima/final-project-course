@@ -3,6 +3,7 @@ import { Transaction, TransactionData } from '../../models/transaction.ts'
 import { Goal } from '../../models/goal.ts'
 import { UserWithDetails } from '../../models/user.ts'
 
+// USER
 export async function getUserWithDetailsById(
   id: number,
   db = connection,
@@ -27,45 +28,41 @@ export async function getUserWithDetailsById(
   return userDataWithDetails as UserWithDetails
 }
 
-export async function addExpense(
-  expense: TransactionData,
+// TRANSACTIONS
+export async function addTransaction(
+  transaction: TransactionData,
   db = connection,
 ): Promise<number> {
   const [newTransaction] = await db('transactions')
-    .insert({
-      ...expense,
-      type: 'expense',
-    })
+    .insert(transaction)
     .returning('id')
 
   return newTransaction
 }
 
-export async function deleteExpense(
-  expenseId: number,
+export async function deleteTransaction(
+  id: number,
   db = connection,
 ): Promise<number> {
-  const deletedCount = await db('transactions').where({ id: expenseId }).del()
-
+  const deletedCount = await db('transactions').where('id', id).del()
   if (deletedCount === 0) {
-    throw new Error(`Expense with ID ${expenseId} not found`)
+    throw new Error(`Transaction with ID ${id} not found`)
   }
-
-  return expenseId
+  return id
 }
 
-export async function updateExpense(
+export async function updateTransaction(
   id: number,
-  updatedExpense: Partial<Transaction>,
+  updatedTransaction: Partial<Transaction>,
   db = connection,
 ): Promise<number> {
   const [updatedId] = await db('transactions')
     .where({ id })
     .update({
-      description: updatedExpense.description,
-      amount: updatedExpense.amount,
-      type: updatedExpense.type,
-      user_id: updatedExpense.user_id,
+      description: updatedTransaction.description,
+      amount: updatedTransaction.amount,
+      type: updatedTransaction.type,
+      user_id: updatedTransaction.user_id,
     })
     .returning('id')
 
