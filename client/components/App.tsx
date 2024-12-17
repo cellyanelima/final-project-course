@@ -1,13 +1,14 @@
-import FormField from './Form'
-//import Goals from './Goals'
-import BarChart from './BarChart.tsx'
-//import PieChart from './PieChart.tsx'
-//import { calculateAnnualExpenses } from '../hooks/useFinancialCalculations'
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import FormField from './Form.tsx'
+import BarChart from './BarChart.tsx'
 import Overview from './Overview'
 import PieChart from './PieChart.tsx'
+//import Goals from './Goals'
+//import PieChart from './PieChart.tsx'
+//import { calculateAnnualExpenses } from '../hooks/useFinancialCalculations'
 //import IncomeExpenseChart from './IncomeExpenseChart'
+import '../styles/index.scss'
 
 function App() {
   return (
@@ -17,19 +18,18 @@ function App() {
         <Route
           path="/"
           element={
-            <>
-              {/* <div>
-                <IncomeExpenseChart />
-              </div> */}
-              <div className="app">
-                <h1>My PiggyPal</h1>
+            <div className="app">
+              <h1 className="title">My PiggyPal</h1>
+              <FormField />
+              <div className="graphs-container">
+                <div className="graph-box">
+                  <BarChart />
+                </div>
+                <div className="graph-box">
+                  <PieChart />
+                </div>
               </div>
-              <div>
-                <FormField />
-              </div>
-              <BarChart />
-              <PieChart />
-            </>
+            </div>
           }
         />
       </Routes>
