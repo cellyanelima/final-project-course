@@ -40,15 +40,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Space between the graphs */
-  flex-wrap: wrap; /* Allow graphs to wrap on smaller screens */
+  gap: 20px; 
+  flex-wrap: wrap; 
   margin-top: 20px;
 }
 
 /* Individual graph box */
 .graph-box {
-  width: 400px; /* Adjust graph width */
-  height: 400px; /* Adjust graph height */
+  width: 400px;
+  height: 400px; 
   display: flex;
   align-items: center;
   justify-content: center;
