@@ -1,77 +1,78 @@
 import { Pie } from 'react-chartjs-2'
 import { useUserData } from '../hooks/useUserData'
+import { Transaction } from '../../models/transaction'
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
+  ArcElement,
   Tooltip,
   Legend,
+  TooltipItem,
 } from 'chart.js'
 
-// Register the required components for Chart.js
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 const PieChart = () => {
   const { data, isLoading, error } = useUserData()
-  //console.log('Hook data:', data)
 
-  if (isLoading) {
-    return <p>Loading chart...</p>
-  }
+  if (isLoading) return <p>Loading chart...</p>
+  if (error instanceof Error) return <p>Error loading data: {error.message}</p>
+  if (!data) return <p>Error: data not found.</p>
 
-  if (error instanceof Error) {
-    return <p>Error loading data: {error.message}</p>
-  }
+  const expenses = data.transactions.filter(
+    (transaction: Transaction) => transaction.type === 'expense',
+  )
 
-  if (!data) {
-    return <p>Error: data not found.</p>
-  }
-
-  let totalIncome = 0
-  let totalExpense = 0
-  data.transactions.forEach((e) => {
-    if (e.type === 'income') totalIncome += e.amount
-    if (e.type === 'expense') totalExpense += e.amount
-  })
-  console.log(totalExpense)
+  const chartLabels = expenses.map(
+    (expense) => `${expense.description} (${expense.frequency})`,
+  )
+  const chartValues = expenses.map((expense) => Number(expense.amount))
 
   const chartData = {
-    labels: [data.name],
+    labels: chartLabels,
     datasets: [
       {
-        label: 'Income',
-        data: [totalIncome],
-        backgroundColor: 'green',
-      },
-      {
-        label: 'Expenses',
-        data: [totalExpense],
-        backgroundColor: 'red',
+        data: chartValues,
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF',
+          '#FF9F40',
+        ],
+        hoverBackgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF',
+          '#FF9F40',
+        ],
       },
     ],
   }
 
+  const chartOptions = {
+    plugins: {
+      legend: {
+        position: 'right' as const,
+      },
+      tooltip: {
+        callbacks: {
+          label: (context: TooltipItem<'pie'>) => {
+            const value = context.raw as number
+            return `R$ ${value.toFixed(2)}`
+          },
+        },
+      },
+    },
+    maintainAspectRatio: false,
+  }
+
   return (
-    <div style={{ width: '600px', margin: '0 auto' }}>
-      <h2>Income and expenses by user</h2>
-      <Pie
-        data={chartData}
-        options={{
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        }}
-      />
+    <div style={{ width: '600px', height: '400px', margin: '0 auto' }}>
+      <h2>Expenses by Description and Frequency</h2>
+      <Pie data={chartData} options={chartOptions} />
     </div>
   )
 }
