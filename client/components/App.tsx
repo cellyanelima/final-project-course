@@ -6,6 +6,7 @@ import BarChart from './BarChart.tsx'
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Overview from './Overview'
+import PieChart from './PieChart.tsx'
 //import IncomeExpenseChart from './IncomeExpenseChart'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                 <FormField />
               </div>
               <BarChart />
+              <PieChart />
             </>
           }
         />
