@@ -8,8 +8,6 @@ import PieChart from './PieChart.tsx'
 //import PieChart from './PieChart.tsx'
 //import { calculateAnnualExpenses } from '../hooks/useFinancialCalculations'
 //import IncomeExpenseChart from './IncomeExpenseChart'
-
-// Import CSS
 import '../styles/index.scss'
 
 function App() {
