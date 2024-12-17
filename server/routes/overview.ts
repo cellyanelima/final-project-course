@@ -19,15 +19,16 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   const { user_id } = req.query
 
-  if (!user_id) {
-    return res.status(400).json({ error: 'user_id is required' })
+  // Validate user_id
+  if (!user_id || isNaN(Number(user_id))) {
+    return res.status(400).json({ error: 'Invalid or missing user_id' })
   }
 
   try {
     // Fetch transactions for the user
     const transactions = await db('transactions')
       .where({ user_id })
-      .select('id', 'description', 'amount', 'type')
+      .select('id', 'description', 'amount', 'type', 'frequency')
 
     // Fetch goals for the user
     const goals = await db('goals')
@@ -37,13 +38,23 @@ router.get('/', async (req, res) => {
     if (transactions.length === 0 && goals.length === 0) {
       return res
         .status(404)
-        .json({ message: `No data found for user ${user_id}` })
+        .json({ error: `No transactions or goals found for user ${user_id}` })
     }
 
-    res.json({ user_id, transactions, goals })
+    // Respond with data
+    res.json({
+      user_id,
+      transactions_count: transactions.length,
+      goals_count: goals.length,
+      transactions,
+      goals,
+    })
   } catch (error) {
-    console.error('Error fetching data:', error)
-    res.status(500).json({ error: 'Failed to fetch data' })
+    console.error(
+      `[Overview API] Error fetching data for user ${user_id}:`,
+      error,
+    )
+    res.status(500).json({ error: 'An internal server error occurred' })
   }
 })
 
