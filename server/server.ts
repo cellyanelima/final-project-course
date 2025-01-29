@@ -1,15 +1,20 @@
 import express from 'express'
 import * as Path from 'node:path'
-import expensesRoutes from './routes/expense.ts'
-
-import financesRoutes from './routes/goals.ts'
+import usersRoutes from './routes/users.ts'
+import incomesRoutes from './routes/incomes.ts'
+import expensesRoutes from './routes/expenses.ts'
+//import goalsRoutes from './routes/goals.ts'
+import overviewRoutes from './routes/overview'
 
 const server = express()
 
 server.use(express.json())
 
-server.use('/api/v1/finances', financesRoutes)
+server.use('/api/v1/users', usersRoutes)
+server.use('/api/v1/incomes', incomesRoutes)
 server.use('/api/v1/expenses', expensesRoutes)
+//server.use('/api/v1/goals', goalsRoutes)
+server.use('/api/v1/overview', overviewRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))
