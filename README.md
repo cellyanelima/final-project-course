@@ -27,7 +27,7 @@
 
 #### **Frontend:**  
 - **Framework:** React.js  
-- **State Management:** React Context API or Redux  
+- **State Management:** React Context API  
 - **Chart Library:** Chart.js or Recharts  
 - **Styling:** Tailwind CSS or Material-UI  
 - **Interactivity:** JavaScript (Vanilla) with React Hooks  
